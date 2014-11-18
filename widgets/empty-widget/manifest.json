@@ -1,0 +1,10 @@
+{
+    "WidgetDescription" : {"en" : "Dummy Widget Sample"},
+    "WidgetIcon" : "empty.png",
+    "WidgetName" : "empty-widget",
+    "WidgetTitle" : {"en" : "Empty Widget"},
+    "HasSettings" : false,
+    "SupportedLanguages" : "en",
+    "VendorIdentifier" : "Fluxtream.com",
+    "RequiredConnectors": null
+}

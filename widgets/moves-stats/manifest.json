@@ -1,0 +1,10 @@
+{
+    "WidgetDescription" : {"en" : "Show basic Moves stats"},
+    "WidgetIcon" : "moves.png",
+    "WidgetName" : "moves-stats",
+    "WidgetTitle" : {"en" : "Moves Stats"},
+    "HasSettings" : true,
+    "SupportedLanguages" : "en",
+    "VendorIdentifier" : "Fluxtream.com",
+    "RequiredConnectors":"moves"
+}
