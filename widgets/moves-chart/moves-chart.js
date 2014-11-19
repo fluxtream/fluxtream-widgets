@@ -4,6 +4,7 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
     var Chartjs;
 
     MovesStats.init = function() {
+        // load Chartjs (http://www.chartjs.org/)
         require([this.manifest.WidgetRepositoryURL + "/" + this.manifest.WidgetName + "/Chart.min.js"], function(Chart){
             MovesStats.Chartjs = Chart.noConflict();
         });
@@ -77,8 +78,6 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
             }
         ]
         if (!_.isUndefined(this.Chartjs)) {
-            console.log("this.Chartjs: ");
-            console.log(this.Chartjs);
             new this.Chartjs(ctx).Pie(data,{});
         }
     }

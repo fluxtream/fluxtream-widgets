@@ -14,16 +14,19 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
         });
     }
     
+    // this gives us a chance to issue an error warning. If everything's OK, just save the settings and reload the view.
     MovesStats.validateSettings = function() {
         var aggregateValues = $("input:radio[name=aggregateValues]:checked").val();
         this.saveSettings({"aggregateValues" : aggregateValues});
         MovesStats.reload();
     };
 
+    // inject the widget's settings into our form
     MovesStats.bindWidgetSettings = function(widgetSettings) {
         $("input:radio[name=aggregateValues][value=" + widgetSettings.aggregateValues + "]").attr("checked","checked");
     }
 
+    // initialize settings on first run
     MovesStats.defaultSettings = function(widgetSettings) {
         if (typeof(widgetSettings.aggregateValues)=="undefined")
             $("input:radio[name=aggregateValues][value=no]").attr("checked","checked");
@@ -34,6 +37,8 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
         var movesFacets = this.digest.facets["moves-move"];
         var runningMinutes = 0, walkingMinutes = 0,
             transportMinutes = 0, cyclingMinutes = 0;
+        // let's run through all moves activities and extract the durations for the different
+        // types of activities
         if (movesFacets!=null) {
             for (var i=0; i<movesFacets.length; i++) {
                 if (movesFacets[i]["hasActivities"]) {
@@ -58,6 +63,7 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
                 }
             }
         }
+        // average out duration if looking at weekly or monthly data
         if (this.settings.aggregateValues==="no") {
             switch(this.digest.calendar.timeUnit) {
                 case "WEEK":
@@ -83,8 +89,7 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
             transport : transportMinutes>0 ? moment.duration(transportMinutes, "minutes").humanize() : "-",
             running : runningMinutes>0 ? moment.duration(runningMinutes, "minutes").humanize() : "-"
         };
-        $("#moves-stats-widget .flx-body").empty();
-        $("#moves-stats-widget .flx-body").append(
+        $("#moves-stats-widget .flx-body").empty().append(
             html.render({manifest : this.manifest,
                          activityDurations : activityDurations,
                          digest : this.digest
