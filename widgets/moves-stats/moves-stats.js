@@ -15,21 +15,24 @@ define(["core/DashboardWidget"], function(DashboardWidget) {
     }
     
     // this gives us a chance to issue an error warning. If everything's OK, just save the settings and reload the view.
-    MovesStats.validateSettings = function() {
+    MovesStats.validateSettings = function(onDone) {
         var aggregateValues = $("input:radio[name=aggregateValues]:checked").val();
         this.saveSettings({"aggregateValues" : aggregateValues});
         MovesStats.reload();
+        onDone();
     };
 
     // inject the widget's settings into our form
-    MovesStats.bindWidgetSettings = function(widgetSettings) {
+    MovesStats.bindWidgetSettings = function(widgetSettings,onDone) {
         $("input:radio[name=aggregateValues][value=" + widgetSettings.aggregateValues + "]").attr("checked","checked");
+        onDone();
     }
 
     // initialize settings on first run
-    MovesStats.defaultSettings = function(widgetSettings) {
+    MovesStats.defaultSettings = function(widgetSettings,onDone) {
         if (typeof(widgetSettings.aggregateValues)=="undefined")
             $("input:radio[name=aggregateValues][value=no]").attr("checked","checked");
+        onDone();
     }
 
     MovesStats.postLoad = function(template) {
